@@ -2612,6 +2612,92 @@ final class CustomOverwriteTargetIsValidFamily extends $Family
   String toString() => r'customOverwriteTargetIsValidProvider';
 }
 
+@ProviderFor(customOverwriteProxyProviderIsValid)
+const customOverwriteProxyProviderIsValidProvider =
+    CustomOverwriteProxyProviderIsValidFamily._();
+
+final class CustomOverwriteProxyProviderIsValidProvider
+    extends $FunctionalProvider<bool, bool, bool>
+    with $Provider<bool> {
+  const CustomOverwriteProxyProviderIsValidProvider._({
+    required CustomOverwriteProxyProviderIsValidFamily super.from,
+    required (int, String?) super.argument,
+  }) : super(
+         retry: null,
+         name: r'customOverwriteProxyProviderIsValidProvider',
+         isAutoDispose: true,
+         dependencies: null,
+         $allTransitiveDependencies: null,
+       );
+
+  @override
+  String debugGetCreateSourceHash() =>
+      _$customOverwriteProxyProviderIsValidHash();
+
+  @override
+  String toString() {
+    return r'customOverwriteProxyProviderIsValidProvider'
+        ''
+        '$argument';
+  }
+
+  @$internal
+  @override
+  $ProviderElement<bool> $createElement($ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  bool create(Ref ref) {
+    final argument = this.argument as (int, String?);
+    return customOverwriteProxyProviderIsValid(ref, argument.$1, argument.$2);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(bool value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<bool>(value),
+    );
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is CustomOverwriteProxyProviderIsValidProvider &&
+        other.argument == argument;
+  }
+
+  @override
+  int get hashCode {
+    return argument.hashCode;
+  }
+}
+
+String _$customOverwriteProxyProviderIsValidHash() =>
+    r'5b93515706b1c8edb078f10be4cbf8c7d73b54c1';
+
+final class CustomOverwriteProxyProviderIsValidFamily extends $Family
+    with $FunctionalFamilyOverride<bool, (int, String?)> {
+  const CustomOverwriteProxyProviderIsValidFamily._()
+    : super(
+        retry: null,
+        name: r'customOverwriteProxyProviderIsValidProvider',
+        dependencies: null,
+        $allTransitiveDependencies: null,
+        isAutoDispose: true,
+      );
+
+  CustomOverwriteProxyProviderIsValidProvider call(
+    int profileId,
+    String? providerName,
+  ) => CustomOverwriteProxyProviderIsValidProvider._(
+    argument: (profileId, providerName),
+    from: this,
+  );
+
+  @override
+  String toString() => r'customOverwriteProxyProviderIsValidProvider';
+}
+
 @ProviderFor(customOverwriteUseIsValid)
 const customOverwriteUseIsValidProvider = CustomOverwriteUseIsValidFamily._();
 

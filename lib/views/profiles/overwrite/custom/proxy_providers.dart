@@ -9,6 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:smooth_sheets/smooth_sheets.dart';
 
+import 'widgets.dart';
+
 class EditProxyProvidersView extends ConsumerStatefulWidget {
   const EditProxyProvidersView({super.key});
 
@@ -79,33 +81,54 @@ class _EditProxyProvidersViewState extends ConsumerState<EditProxyProvidersView>
         padding: EdgeInsets.symmetric(horizontal: 16),
         child: ItemPositionProvider(
           position: position,
-          child: DecorationListItem(
-            minVerticalPadding: 8,
-            title: TooltipText(
-              text: Text(
-                providerName,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-              ),
-            ),
-            contentPadding: EdgeInsets.only(left: 16, right: 0),
-            leading: CommonMinIconButtonTheme(
-              child: IconButton.filledTonal(
-                onPressed: () {
-                  _handleRemove(providerName);
-                },
-                icon: Icon(Icons.remove, size: 18),
-                padding: EdgeInsets.zero,
-              ),
-            ),
-            trailing: ReorderableDelayedDragStartListener(
-              index: index,
-              child: Container(
-                color: Colors.transparent,
-                padding: EdgeInsets.all(16),
-                child: Icon(Icons.drag_handle),
-              ),
-            ),
+          child: Consumer(
+            builder: (_, ref, _) {
+              final profileId = ProfileIdProvider.of(context)!.profileId;
+              final isValid = ref.watch(
+                customOverwriteProxyProviderIsValidProvider(
+                  profileId,
+                  providerName,
+                ),
+              );
+              return DecorationListItem(
+                invalid: !isValid,
+                minVerticalPadding: 8,
+                title: TooltipText(
+                  text: Text(
+                    providerName,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+                contentPadding: EdgeInsets.only(left: 16, right: 0),
+                leading: CommonMinIconButtonTheme(
+                  child: IconButton.filledTonal(
+                    onPressed: () {
+                      _handleRemove(providerName);
+                    },
+                    icon: Icon(Icons.remove, size: 18),
+                    padding: EdgeInsets.zero,
+                  ),
+                ),
+                trailing: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    if (!isValid)
+                      InfoMessageButton(
+                        message: '$providerName 是一个无效的代理集',
+                      ),
+                    ReorderableDelayedDragStartListener(
+                      index: index,
+                      child: Container(
+                        color: Colors.transparent,
+                        padding: EdgeInsets.all(16),
+                        child: Icon(Icons.drag_handle),
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            },
           ),
         ),
       ),

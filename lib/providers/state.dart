@@ -734,11 +734,25 @@ bool customOverwriteTargetIsValid(Ref ref, int profileId, String? target) {
 }
 
 @riverpod
+bool customOverwriteProxyProviderIsValid(
+  Ref ref,
+  int profileId,
+  String? providerName,
+) {
+  final valid = ref.watch(
+    customOverwriteDateProvider(
+      profileId,
+    ).select((state) => state.proxyProviders.contains(providerName)),
+  );
+  return valid;
+}
+
+@riverpod
 bool customOverwriteUseIsValid(Ref ref, int profileId, List<String> use) {
   final valid = ref.watch(
     customOverwriteDateProvider(
       profileId,
-    ).select((state) => state.ruleTargets.containsAll(use)),
+    ).select((state) => state.proxyProviders.containsAll(use)),
   );
   return valid;
 }
