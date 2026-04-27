@@ -65,7 +65,14 @@ class RuleItem extends StatelessWidget {
     return CommonMinIconButtonTheme(
       child: IconButton(
         onPressed: () {
-          globalState.showMessage(message: TextSpan(text: rule.targetErrorTip));
+          globalState.showMessage(
+            message: TextSpan(
+              text: rule.targetErrorTip(
+                context.appLocalizations.invalidSubRule(rule.subRule ?? ''),
+                context.appLocalizations.invalidPolicy(rule.ruleTarget ?? ''),
+              ),
+            ),
+          );
         },
         icon: Icon(Icons.info, size: 16.ap, color: context.colorScheme.error),
       ),

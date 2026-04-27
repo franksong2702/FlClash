@@ -448,10 +448,10 @@ extension RuleExt on Rule {
     };
   }
 
-  String? get targetErrorTip {
+  String? targetErrorTip(String invalidSubRuleTip, String invalidPolicyTip) {
     return switch (ruleAction == RuleAction.SUB_RULE) {
-      true => '$subRule 是一个无效的SUB_RULE',
-      false => '$ruleTarget 是一个无效的策略',
+      true => invalidSubRuleTip,
+      false => invalidPolicyTip,
     };
   }
 

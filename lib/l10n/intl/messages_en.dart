@@ -38,23 +38,32 @@ class MessageLookup extends MessageLookupByLibrary {
   static String m6(count) =>
       "${Intl.plural(count, one: '1 hour ago', other: '${count} hours ago')}";
 
-  static String m7(count) =>
+  static String m7(target) => "${target} is an invalid policy";
+
+  static String m8(proxyName) => "${proxyName} is an invalid proxy";
+
+  static String m9(providerName) =>
+      "${providerName} is an invalid proxy provider";
+
+  static String m10(subRule) => "${subRule} is an invalid SUB_RULE";
+
+  static String m11(count) =>
       "${Intl.plural(count, one: '1 minute ago', other: '${count} minutes ago')}";
 
-  static String m8(count) =>
+  static String m12(count) =>
       "${Intl.plural(count, one: '1 month ago', other: '${count} months ago')}";
 
-  static String m9(label) => "No ${label} yet";
+  static String m13(label) => "No ${label} yet";
 
-  static String m10(label) => "${label} must be a number";
+  static String m14(label) => "${label} must be a number";
 
-  static String m11(label) => "${label} must be between 1024 and 49151";
+  static String m15(label) => "${label} must be between 1024 and 49151";
 
-  static String m12(count) => "${count} items have been selected";
+  static String m16(count) => "${count} items have been selected";
 
-  static String m13(label) => "${label} must be a url";
+  static String m17(label) => "${label} must be a url";
 
-  static String m14(count) =>
+  static String m18(count) =>
       "${Intl.plural(count, one: '1 year ago', other: '${count} years ago')}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
@@ -488,6 +497,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "invalidBackupFile": MessageLookupByLibrary.simpleMessage(
       "Invalid backup file",
     ),
+    "invalidPolicy": m7,
+    "invalidProxy": m8,
+    "invalidProxyProvider": m9,
+    "invalidSubRule": m10,
     "ipcidr": MessageLookupByLibrary.simpleMessage("Ipcidr"),
     "ipv6Desc": MessageLookupByLibrary.simpleMessage(
       "When turned on it will be able to receive IPv6 traffic",
@@ -540,12 +553,12 @@ class MessageLookup extends MessageLookupByLibrary {
       "Modify the default system exit event",
     ),
     "minutes": MessageLookupByLibrary.simpleMessage("Minutes"),
-    "minutesAgo": m7,
+    "minutesAgo": m11,
     "mixedPort": MessageLookupByLibrary.simpleMessage("Mixed Port"),
     "mode": MessageLookupByLibrary.simpleMessage("Mode"),
     "monochromeScheme": MessageLookupByLibrary.simpleMessage("Monochrome"),
     "months": MessageLookupByLibrary.simpleMessage("Months"),
-    "monthsAgo": m8,
+    "monthsAgo": m12,
     "more": MessageLookupByLibrary.simpleMessage("More"),
     "name": MessageLookupByLibrary.simpleMessage("Name"),
     "nameSort": MessageLookupByLibrary.simpleMessage("Sort by name"),
@@ -601,8 +614,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "nullProfileDesc": MessageLookupByLibrary.simpleMessage(
       "No profile, Please add a profile",
     ),
-    "nullTip": m9,
-    "numberTip": m10,
+    "nullTip": m13,
+    "numberTip": m14,
     "oneColumn": MessageLookupByLibrary.simpleMessage("One column"),
     "onlyIcon": MessageLookupByLibrary.simpleMessage("Icon"),
     "onlyOtherApps": MessageLookupByLibrary.simpleMessage(
@@ -663,7 +676,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "portConflictTip": MessageLookupByLibrary.simpleMessage(
       "Please enter a different port",
     ),
-    "portTip": m11,
+    "portTip": m15,
     "preferH3Desc": MessageLookupByLibrary.simpleMessage(
       "Prioritize the use of DOH\'s http/3",
     ),
@@ -704,8 +717,14 @@ class MessageLookup extends MessageLookupByLibrary {
     "proxiesEmpty": MessageLookupByLibrary.simpleMessage("Proxies is empty"),
     "proxiesSetting": MessageLookupByLibrary.simpleMessage("Proxies setting"),
     "proxyChains": MessageLookupByLibrary.simpleMessage("Proxy chains"),
+    "proxyDetectedAbnormal": MessageLookupByLibrary.simpleMessage(
+      "Detected selected proxies are abnormal",
+    ),
     "proxyFilter": MessageLookupByLibrary.simpleMessage("Proxy filter"),
     "proxyGroup": MessageLookupByLibrary.simpleMessage("Proxy group"),
+    "proxyGroupDetectedAbnormal": MessageLookupByLibrary.simpleMessage(
+      "Detected current proxy group is abnormal",
+    ),
     "proxyGroupEmpty": MessageLookupByLibrary.simpleMessage(
       "Proxy group is empty",
     ),
@@ -722,6 +741,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "proxyPort": MessageLookupByLibrary.simpleMessage("ProxyPort"),
     "proxyPortDesc": MessageLookupByLibrary.simpleMessage(
       "Set the Clash listening port",
+    ),
+    "proxyProviderDetectedAbnormal": MessageLookupByLibrary.simpleMessage(
+      "Detected selected proxy providers are abnormal",
     ),
     "proxyProviders": MessageLookupByLibrary.simpleMessage("Proxy providers"),
     "proxyProvidersEmpty": MessageLookupByLibrary.simpleMessage(
@@ -937,7 +959,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Please select sub rule",
     ),
     "selected": MessageLookupByLibrary.simpleMessage("Selected"),
-    "selectedCountTitle": m12,
+    "selectedCountTitle": m16,
     "settings": MessageLookupByLibrary.simpleMessage("Settings"),
     "show": MessageLookupByLibrary.simpleMessage("Show"),
     "shrink": MessageLookupByLibrary.simpleMessage("Shrink"),
@@ -1040,7 +1062,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "urlDesc": MessageLookupByLibrary.simpleMessage(
       "Obtain profile through URL",
     ),
-    "urlTip": m13,
+    "urlTip": m17,
     "useHosts": MessageLookupByLibrary.simpleMessage("Use hosts"),
     "useSystemHosts": MessageLookupByLibrary.simpleMessage("Use system hosts"),
     "value": MessageLookupByLibrary.simpleMessage("Value"),
@@ -1066,7 +1088,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "whitelistMode": MessageLookupByLibrary.simpleMessage("Whitelist mode"),
     "years": MessageLookupByLibrary.simpleMessage("Years"),
-    "yearsAgo": m14,
+    "yearsAgo": m18,
     "zh_CN": MessageLookupByLibrary.simpleMessage("Simplified Chinese"),
   };
 }

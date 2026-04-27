@@ -566,5 +566,12 @@
   "subRuleNotEmpty": "子规则不能为空",
   "splitStrategyNotEmpty": "分流策略不能为空",
   "proxyProvidersEmpty": "代理集为空",
-  "timeout": "超时"
+  "timeout": "超时",
+  "invalidSubRule": "{subRule} 是一个无效的SUB_RULE",
+  "invalidPolicy": "{target} 是一个无效的策略",
+  "invalidProxyProvider": "{providerName} 是一个无效的代理集",
+  "invalidProxy": "{proxyName} 是一个无效的代理",
+  "proxyGroupDetectedAbnormal": "检测到当前策略组异常",
+  "proxyProviderDetectedAbnormal": "检测到选中的代理集存在异常",
+  "proxyDetectedAbnormal": "检测到选中的代理存在异常"
 }

@@ -37,23 +37,32 @@ class MessageLookup extends MessageLookupByLibrary {
   static String m6(count) =>
       "${Intl.plural(count, one: '${count} час назад', few: '${count} часа назад', many: '${count} часов назад', other: '${count} часа назад')}";
 
-  static String m7(count) =>
+  static String m7(target) => "${target} является недопустимой политикой";
+
+  static String m8(proxyName) => "${proxyName} является недопустимым прокси";
+
+  static String m9(providerName) =>
+      "${providerName} является недопустимым провайдером прокси";
+
+  static String m10(subRule) => "${subRule} является недопустимым подправилом";
+
+  static String m11(count) =>
       "${Intl.plural(count, one: '${count} минута назад', few: '${count} минуты назад', many: '${count} минут назад', other: '${count} минуты назад')}";
 
-  static String m8(count) =>
+  static String m12(count) =>
       "${Intl.plural(count, one: '${count} месяц назад', few: '${count} месяца назад', many: '${count} месяцев назад', other: '${count} месяца назад')}";
 
-  static String m9(label) => "${label} пока отсутствуют";
+  static String m13(label) => "${label} пока отсутствуют";
 
-  static String m10(label) => "${label} должно быть числом";
+  static String m14(label) => "${label} должно быть числом";
 
-  static String m11(label) => "${label} должен быть числом от 1024 до 49151";
+  static String m15(label) => "${label} должен быть числом от 1024 до 49151";
 
-  static String m12(count) => "Выбрано ${count} элементов";
+  static String m16(count) => "Выбрано ${count} элементов";
 
-  static String m13(label) => "${label} должен быть URL";
+  static String m17(label) => "${label} должен быть URL";
 
-  static String m14(count) =>
+  static String m18(count) =>
       "${Intl.plural(count, one: '${count} год назад', few: '${count} года назад', many: '${count} лет назад', other: '${count} года назад')}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
@@ -511,6 +520,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "invalidBackupFile": MessageLookupByLibrary.simpleMessage(
       "Неверный файл резервной копии",
     ),
+    "invalidPolicy": m7,
+    "invalidProxy": m8,
+    "invalidProxyProvider": m9,
+    "invalidSubRule": m10,
     "ipcidr": MessageLookupByLibrary.simpleMessage("IPCIDR"),
     "ipv6Desc": MessageLookupByLibrary.simpleMessage(
       "При включении будет возможно получать IPv6 трафик",
@@ -571,12 +584,12 @@ class MessageLookup extends MessageLookupByLibrary {
       "Изменить стандартное событие выхода из системы",
     ),
     "minutes": MessageLookupByLibrary.simpleMessage("Минут"),
-    "minutesAgo": m7,
+    "minutesAgo": m11,
     "mixedPort": MessageLookupByLibrary.simpleMessage("Смешанный порт"),
     "mode": MessageLookupByLibrary.simpleMessage("Режим"),
     "monochromeScheme": MessageLookupByLibrary.simpleMessage("Монохром"),
     "months": MessageLookupByLibrary.simpleMessage("Месяцев"),
-    "monthsAgo": m8,
+    "monthsAgo": m12,
     "more": MessageLookupByLibrary.simpleMessage("Еще"),
     "name": MessageLookupByLibrary.simpleMessage("Имя"),
     "nameSort": MessageLookupByLibrary.simpleMessage("Сортировка по имени"),
@@ -634,8 +647,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "nullProfileDesc": MessageLookupByLibrary.simpleMessage(
       "Нет профиля, пожалуйста, добавьте профиль",
     ),
-    "nullTip": m9,
-    "numberTip": m10,
+    "nullTip": m13,
+    "numberTip": m14,
     "oneColumn": MessageLookupByLibrary.simpleMessage("Один столбец"),
     "onlyIcon": MessageLookupByLibrary.simpleMessage("Только иконка"),
     "onlyOtherApps": MessageLookupByLibrary.simpleMessage(
@@ -704,7 +717,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "portConflictTip": MessageLookupByLibrary.simpleMessage(
       "Введите другой порт",
     ),
-    "portTip": m11,
+    "portTip": m15,
     "preferH3Desc": MessageLookupByLibrary.simpleMessage(
       "Приоритетное использование HTTP/3 для DOH",
     ),
@@ -745,8 +758,14 @@ class MessageLookup extends MessageLookupByLibrary {
     "proxiesEmpty": MessageLookupByLibrary.simpleMessage("Список прокси пуст"),
     "proxiesSetting": MessageLookupByLibrary.simpleMessage("Настройка прокси"),
     "proxyChains": MessageLookupByLibrary.simpleMessage("Цепочки прокси"),
+    "proxyDetectedAbnormal": MessageLookupByLibrary.simpleMessage(
+      "Обнаружена аномалия выбранных прокси",
+    ),
     "proxyFilter": MessageLookupByLibrary.simpleMessage("Фильтр прокси"),
     "proxyGroup": MessageLookupByLibrary.simpleMessage("Группа прокси"),
+    "proxyGroupDetectedAbnormal": MessageLookupByLibrary.simpleMessage(
+      "Обнаружена аномалия текущей группы прокси",
+    ),
     "proxyGroupEmpty": MessageLookupByLibrary.simpleMessage(
       "Группа прокси пуста",
     ),
@@ -765,6 +784,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "proxyPort": MessageLookupByLibrary.simpleMessage("Порт прокси"),
     "proxyPortDesc": MessageLookupByLibrary.simpleMessage(
       "Установить порт прослушивания Clash",
+    ),
+    "proxyProviderDetectedAbnormal": MessageLookupByLibrary.simpleMessage(
+      "Обнаружена аномалия выбранных провайдеров прокси",
     ),
     "proxyProviders": MessageLookupByLibrary.simpleMessage("Провайдеры прокси"),
     "proxyProvidersEmpty": MessageLookupByLibrary.simpleMessage(
@@ -990,7 +1012,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Пожалуйста, выберите подправило",
     ),
     "selected": MessageLookupByLibrary.simpleMessage("Выбрано"),
-    "selectedCountTitle": m12,
+    "selectedCountTitle": m16,
     "settings": MessageLookupByLibrary.simpleMessage("Настройки"),
     "show": MessageLookupByLibrary.simpleMessage("Показать"),
     "shrink": MessageLookupByLibrary.simpleMessage("Сжать"),
@@ -1105,7 +1127,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "urlDesc": MessageLookupByLibrary.simpleMessage(
       "Получить профиль через URL",
     ),
-    "urlTip": m13,
+    "urlTip": m17,
     "useHosts": MessageLookupByLibrary.simpleMessage("Использовать hosts"),
     "useSystemHosts": MessageLookupByLibrary.simpleMessage(
       "Использовать системные hosts",
@@ -1135,7 +1157,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Режим белого списка",
     ),
     "years": MessageLookupByLibrary.simpleMessage("Лет"),
-    "yearsAgo": m14,
+    "yearsAgo": m18,
     "zh_CN": MessageLookupByLibrary.simpleMessage("Упрощенный китайский"),
   };
 }

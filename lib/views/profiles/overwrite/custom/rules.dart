@@ -537,7 +537,9 @@ class _AddOrEditRuleViewState extends ConsumerState<_AddOrEditRuleView> {
                   child: IconButton(
                     onPressed: () {
                       globalState.showMessage(
-                        message: TextSpan(text: '$target 是一个无效的策略'),
+                        message: TextSpan(
+                          text: appLocalizations.invalidPolicy(target!),
+                        ),
                       );
                     },
                     icon: Icon(Icons.info, size: 16.ap, color: foregroundColor),

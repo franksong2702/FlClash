@@ -114,7 +114,7 @@ class _EditProxiesViewState extends ConsumerState<EditProxiesView>
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     if (!isValid)
-                      InfoMessageButton(message: '$proxyName 是一个无效的代理'),
+                      InfoMessageButton(message: appLocalizations.invalidProxy(proxyName)),
                     ReorderableDelayedDragStartListener(
                       index: index,
                       child: Container(

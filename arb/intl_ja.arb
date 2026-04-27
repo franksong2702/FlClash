@@ -566,5 +566,12 @@
   "subRuleNotEmpty": "サブルールは空にできません",
   "splitStrategyNotEmpty": "分流戦略は空にできません",
   "proxyProvidersEmpty": "プロキシプロバイダーが空です",
-  "timeout": "タイムアウト"
+  "timeout": "タイムアウト",
+  "invalidSubRule": "{subRule} は無効なSUB_RULEです",
+  "invalidPolicy": "{target} は無効なポリシーです",
+  "invalidProxyProvider": "{providerName} は無効なプロキシプロバイダーです",
+  "invalidProxy": "{proxyName} は無効なプロキシです",
+  "proxyGroupDetectedAbnormal": "現在のプロキシグループが異常であることを検出しました",
+  "proxyProviderDetectedAbnormal": "選択されたプロキシプロバイダーに異常があることを検出しました",
+  "proxyDetectedAbnormal": "選択されたプロキシに異常があることを検出しました"
 }

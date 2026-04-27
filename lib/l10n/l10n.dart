@@ -4573,6 +4573,76 @@ class AppLocalizations {
   String get timeout {
     return Intl.message('Timeout', name: 'timeout', desc: '', args: []);
   }
+
+  /// `{subRule} is an invalid SUB_RULE`
+  String invalidSubRule(Object subRule) {
+    return Intl.message(
+      '$subRule is an invalid SUB_RULE',
+      name: 'invalidSubRule',
+      desc: '',
+      args: [subRule],
+    );
+  }
+
+  /// `{target} is an invalid policy`
+  String invalidPolicy(Object target) {
+    return Intl.message(
+      '$target is an invalid policy',
+      name: 'invalidPolicy',
+      desc: '',
+      args: [target],
+    );
+  }
+
+  /// `{providerName} is an invalid proxy provider`
+  String invalidProxyProvider(Object providerName) {
+    return Intl.message(
+      '$providerName is an invalid proxy provider',
+      name: 'invalidProxyProvider',
+      desc: '',
+      args: [providerName],
+    );
+  }
+
+  /// `{proxyName} is an invalid proxy`
+  String invalidProxy(Object proxyName) {
+    return Intl.message(
+      '$proxyName is an invalid proxy',
+      name: 'invalidProxy',
+      desc: '',
+      args: [proxyName],
+    );
+  }
+
+  /// `Detected current proxy group is abnormal`
+  String get proxyGroupDetectedAbnormal {
+    return Intl.message(
+      'Detected current proxy group is abnormal',
+      name: 'proxyGroupDetectedAbnormal',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Detected selected proxy providers are abnormal`
+  String get proxyProviderDetectedAbnormal {
+    return Intl.message(
+      'Detected selected proxy providers are abnormal',
+      name: 'proxyProviderDetectedAbnormal',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Detected selected proxies are abnormal`
+  String get proxyDetectedAbnormal {
+    return Intl.message(
+      'Detected selected proxies are abnormal',
+      name: 'proxyDetectedAbnormal',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<AppLocalizations> {

@@ -574,5 +574,12 @@
   "subRuleNotEmpty": "Подправило не может быть пустым",
   "splitStrategyNotEmpty": "Стратегия разделения не может быть пустой",
   "proxyProvidersEmpty": "Провайдеры прокси пусты",
-  "timeout": "Таймаут"
+  "timeout": "Таймаут",
+  "invalidSubRule": "{subRule} является недопустимым подправилом",
+  "invalidPolicy": "{target} является недопустимой политикой",
+  "invalidProxyProvider": "{providerName} является недопустимым провайдером прокси",
+  "invalidProxy": "{proxyName} является недопустимым прокси",
+  "proxyGroupDetectedAbnormal": "Обнаружена аномалия текущей группы прокси",
+  "proxyProviderDetectedAbnormal": "Обнаружена аномалия выбранных провайдеров прокси",
+  "proxyDetectedAbnormal": "Обнаружена аномалия выбранных прокси"
 }

@@ -115,7 +115,7 @@ class _EditProxyProvidersViewState extends ConsumerState<EditProxyProvidersView>
                   children: [
                     if (!isValid)
                       InfoMessageButton(
-                        message: '$providerName 是一个无效的代理集',
+                        message: appLocalizations.invalidProxyProvider(providerName),
                       ),
                     ReorderableDelayedDragStartListener(
                       index: index,

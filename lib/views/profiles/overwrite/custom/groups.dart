@@ -224,7 +224,7 @@ class _ProxyGroupItem extends ConsumerWidget {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  if (!isValid) InfoMessageButton(message: '检测到当前策略组异常'),
+                  if (!isValid) InfoMessageButton(message: appLocalizations.proxyGroupDetectedAbnormal),
                   ReorderableDelayedDragStartListener(
                     index: index,
                     child: Container(
@@ -494,7 +494,7 @@ class _EditProxyGroupViewState extends ConsumerState<_EditProxyGroupView> {
             spacing: 2,
             children: [
               invalid
-                  ? InfoMessageButton(message: '检测到选中的代理集存在异常')
+                  ? InfoMessageButton(message: appLocalizations.proxyProviderDetectedAbnormal)
                   : (!includeAllProviders
                         ? _NumberCard(number: use.length)
                         : _CheckIcon()),
@@ -662,7 +662,7 @@ class _EditProxyGroupViewState extends ConsumerState<_EditProxyGroupView> {
             mainAxisSize: MainAxisSize.min,
             children: [
               invalid
-                  ? InfoMessageButton(message: '检测到选中的代理存在异常')
+                  ? InfoMessageButton(message: appLocalizations.proxyDetectedAbnormal)
                   : (!includeAllProxies
                         ? _NumberCard(number: proxies.length)
                         : _CheckIcon()),

@@ -34,21 +34,29 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m6(count) => "${count}時間前";
 
-  static String m7(count) => "${count}分前";
+  static String m7(target) => "${target} は無効なポリシーです";
 
-  static String m8(count) => "${count}ヶ月前";
+  static String m8(proxyName) => "${proxyName} は無効なプロキシです";
 
-  static String m9(label) => "まだ${label}はありません";
+  static String m9(providerName) => "${providerName} は無効なプロキシプロバイダーです";
 
-  static String m10(label) => "${label}は数字でなければなりません";
+  static String m10(subRule) => "${subRule} は無効なSUB_RULEです";
 
-  static String m11(label) => "${label} は 1024 から 49151 の間でなければなりません";
+  static String m11(count) => "${count}分前";
 
-  static String m12(count) => "${count} 項目が選択されています";
+  static String m12(count) => "${count}ヶ月前";
 
-  static String m13(label) => "${label}はURLである必要があります";
+  static String m13(label) => "まだ${label}はありません";
 
-  static String m14(count) => "${count}年前";
+  static String m14(label) => "${label}は数字でなければなりません";
+
+  static String m15(label) => "${label} は 1024 から 49151 の間でなければなりません";
+
+  static String m16(count) => "${count} 項目が選択されています";
+
+  static String m17(label) => "${label}はURLである必要があります";
+
+  static String m18(count) => "${count}年前";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -365,6 +373,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "interval": MessageLookupByLibrary.simpleMessage("インターバル"),
     "intranetIP": MessageLookupByLibrary.simpleMessage("イントラネットIP"),
     "invalidBackupFile": MessageLookupByLibrary.simpleMessage("無効なバックアップファイル"),
+    "invalidPolicy": m7,
+    "invalidProxy": m8,
+    "invalidProxyProvider": m9,
+    "invalidSubRule": m10,
     "ipcidr": MessageLookupByLibrary.simpleMessage("IPCIDR"),
     "ipv6Desc": MessageLookupByLibrary.simpleMessage("有効化するとIPv6トラフィックを受信可能"),
     "ipv6InboundDesc": MessageLookupByLibrary.simpleMessage("IPv6インバウンドを許可"),
@@ -405,12 +417,12 @@ class MessageLookup extends MessageLookupByLibrary {
       "システムの終了イベントを変更",
     ),
     "minutes": MessageLookupByLibrary.simpleMessage("分"),
-    "minutesAgo": m7,
+    "minutesAgo": m11,
     "mixedPort": MessageLookupByLibrary.simpleMessage("混合ポート"),
     "mode": MessageLookupByLibrary.simpleMessage("モード"),
     "monochromeScheme": MessageLookupByLibrary.simpleMessage("モノクローム"),
     "months": MessageLookupByLibrary.simpleMessage("月"),
-    "monthsAgo": m8,
+    "monthsAgo": m12,
     "more": MessageLookupByLibrary.simpleMessage("詳細"),
     "name": MessageLookupByLibrary.simpleMessage("名前"),
     "nameSort": MessageLookupByLibrary.simpleMessage("名前順"),
@@ -454,8 +466,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "nullProfileDesc": MessageLookupByLibrary.simpleMessage(
       "プロファイルがありません。追加してください",
     ),
-    "nullTip": m9,
-    "numberTip": m10,
+    "nullTip": m13,
+    "numberTip": m14,
     "oneColumn": MessageLookupByLibrary.simpleMessage("1列"),
     "onlyIcon": MessageLookupByLibrary.simpleMessage("アイコンのみ"),
     "onlyOtherApps": MessageLookupByLibrary.simpleMessage("サードパーティアプリのみ"),
@@ -504,7 +516,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "port": MessageLookupByLibrary.simpleMessage("ポート"),
     "portConflictTip": MessageLookupByLibrary.simpleMessage("別のポートを入力してください"),
-    "portTip": m11,
+    "portTip": m15,
     "preferH3Desc": MessageLookupByLibrary.simpleMessage("DOHのHTTP/3を優先使用"),
     "pressKeyboard": MessageLookupByLibrary.simpleMessage("キーボードを押してください"),
     "preview": MessageLookupByLibrary.simpleMessage("プレビュー"),
@@ -537,8 +549,14 @@ class MessageLookup extends MessageLookupByLibrary {
     "proxiesEmpty": MessageLookupByLibrary.simpleMessage("プロキシが空です"),
     "proxiesSetting": MessageLookupByLibrary.simpleMessage("プロキシ設定"),
     "proxyChains": MessageLookupByLibrary.simpleMessage("プロキシチェーン"),
+    "proxyDetectedAbnormal": MessageLookupByLibrary.simpleMessage(
+      "選択されたプロキシに異常があることを検出しました",
+    ),
     "proxyFilter": MessageLookupByLibrary.simpleMessage("プロキシフィルター"),
     "proxyGroup": MessageLookupByLibrary.simpleMessage("プロキシグループ"),
+    "proxyGroupDetectedAbnormal": MessageLookupByLibrary.simpleMessage(
+      "現在のプロキシグループが異常であることを検出しました",
+    ),
     "proxyGroupEmpty": MessageLookupByLibrary.simpleMessage("プロキシグループが空です"),
     "proxyGroupNameDuplicate": MessageLookupByLibrary.simpleMessage(
       "プロキシグループ名が重複しています",
@@ -552,6 +570,9 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "proxyPort": MessageLookupByLibrary.simpleMessage("プロキシポート"),
     "proxyPortDesc": MessageLookupByLibrary.simpleMessage("Clashのリスニングポートを設定"),
+    "proxyProviderDetectedAbnormal": MessageLookupByLibrary.simpleMessage(
+      "選択されたプロキシプロバイダーに異常があることを検出しました",
+    ),
     "proxyProviders": MessageLookupByLibrary.simpleMessage("プロキシプロバイダー"),
     "proxyProvidersEmpty": MessageLookupByLibrary.simpleMessage(
       "プロキシプロバイダーが空です",
@@ -732,7 +753,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "selectSubRule": MessageLookupByLibrary.simpleMessage("サブルールを選択してください"),
     "selected": MessageLookupByLibrary.simpleMessage("選択済み"),
-    "selectedCountTitle": m12,
+    "selectedCountTitle": m16,
     "settings": MessageLookupByLibrary.simpleMessage("設定"),
     "show": MessageLookupByLibrary.simpleMessage("表示"),
     "shrink": MessageLookupByLibrary.simpleMessage("縮小"),
@@ -817,7 +838,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "upload": MessageLookupByLibrary.simpleMessage("アップロード"),
     "url": MessageLookupByLibrary.simpleMessage("URL"),
     "urlDesc": MessageLookupByLibrary.simpleMessage("URL経由でプロファイルを取得"),
-    "urlTip": m13,
+    "urlTip": m17,
     "useHosts": MessageLookupByLibrary.simpleMessage("ホストを使用"),
     "useSystemHosts": MessageLookupByLibrary.simpleMessage("システムホストを使用"),
     "value": MessageLookupByLibrary.simpleMessage("値"),
@@ -837,7 +858,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "webDAVConfiguration": MessageLookupByLibrary.simpleMessage("WebDAV設定"),
     "whitelistMode": MessageLookupByLibrary.simpleMessage("ホワイトリストモード"),
     "years": MessageLookupByLibrary.simpleMessage("年"),
-    "yearsAgo": m14,
+    "yearsAgo": m18,
     "zh_CN": MessageLookupByLibrary.simpleMessage("簡体字中国語"),
   };
 }
