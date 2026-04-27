@@ -99,8 +99,8 @@ class _CustomRulesViewState extends ConsumerState<CustomRulesView>
 
   bool _handleCheckInvalid(
     Rule rule,
-    List<String> ruleTargets,
-    List<String> subRules,
+    Set<String> ruleTargets,
+    Set<String> subRules,
   ) {
     final ruleTarget = rule.realTarget;
     if (rule.ruleAction == RuleAction.SUB_RULE) {

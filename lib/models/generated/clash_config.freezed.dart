@@ -625,7 +625,7 @@ as String?,
 /// @nodoc
 mixin _$CustomOverwriteDate {
 
- List<Proxy> get proxies; List<ProxyGroup> get proxyGroups; List<String> get proxyProviders; List<String> get ruleTargets; List<String> get subRules;
+ List<Proxy> get proxies; List<ProxyGroup> get proxyGroups; Set<String> get proxyProviders; Set<String> get ruleTargets; Set<String> get subRules;
 /// Create a copy of CustomOverwriteDate
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -656,7 +656,7 @@ abstract mixin class $CustomOverwriteDateCopyWith<$Res>  {
   factory $CustomOverwriteDateCopyWith(CustomOverwriteDate value, $Res Function(CustomOverwriteDate) _then) = _$CustomOverwriteDateCopyWithImpl;
 @useResult
 $Res call({
- List<Proxy> proxies, List<ProxyGroup> proxyGroups, List<String> proxyProviders, List<String> ruleTargets, List<String> subRules
+ List<Proxy> proxies, List<ProxyGroup> proxyGroups, Set<String> proxyProviders, Set<String> ruleTargets, Set<String> subRules
 });
 
 
@@ -678,9 +678,9 @@ class _$CustomOverwriteDateCopyWithImpl<$Res>
 proxies: null == proxies ? _self.proxies : proxies // ignore: cast_nullable_to_non_nullable
 as List<Proxy>,proxyGroups: null == proxyGroups ? _self.proxyGroups : proxyGroups // ignore: cast_nullable_to_non_nullable
 as List<ProxyGroup>,proxyProviders: null == proxyProviders ? _self.proxyProviders : proxyProviders // ignore: cast_nullable_to_non_nullable
-as List<String>,ruleTargets: null == ruleTargets ? _self.ruleTargets : ruleTargets // ignore: cast_nullable_to_non_nullable
-as List<String>,subRules: null == subRules ? _self.subRules : subRules // ignore: cast_nullable_to_non_nullable
-as List<String>,
+as Set<String>,ruleTargets: null == ruleTargets ? _self.ruleTargets : ruleTargets // ignore: cast_nullable_to_non_nullable
+as Set<String>,subRules: null == subRules ? _self.subRules : subRules // ignore: cast_nullable_to_non_nullable
+as Set<String>,
   ));
 }
 
@@ -765,7 +765,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( List<Proxy> proxies,  List<ProxyGroup> proxyGroups,  List<String> proxyProviders,  List<String> ruleTargets,  List<String> subRules)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( List<Proxy> proxies,  List<ProxyGroup> proxyGroups,  Set<String> proxyProviders,  Set<String> ruleTargets,  Set<String> subRules)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _CustomOverwriteDate() when $default != null:
 return $default(_that.proxies,_that.proxyGroups,_that.proxyProviders,_that.ruleTargets,_that.subRules);case _:
@@ -786,7 +786,7 @@ return $default(_that.proxies,_that.proxyGroups,_that.proxyProviders,_that.ruleT
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( List<Proxy> proxies,  List<ProxyGroup> proxyGroups,  List<String> proxyProviders,  List<String> ruleTargets,  List<String> subRules)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( List<Proxy> proxies,  List<ProxyGroup> proxyGroups,  Set<String> proxyProviders,  Set<String> ruleTargets,  Set<String> subRules)  $default,) {final _that = this;
 switch (_that) {
 case _CustomOverwriteDate():
 return $default(_that.proxies,_that.proxyGroups,_that.proxyProviders,_that.ruleTargets,_that.subRules);case _:
@@ -806,7 +806,7 @@ return $default(_that.proxies,_that.proxyGroups,_that.proxyProviders,_that.ruleT
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( List<Proxy> proxies,  List<ProxyGroup> proxyGroups,  List<String> proxyProviders,  List<String> ruleTargets,  List<String> subRules)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( List<Proxy> proxies,  List<ProxyGroup> proxyGroups,  Set<String> proxyProviders,  Set<String> ruleTargets,  Set<String> subRules)?  $default,) {final _that = this;
 switch (_that) {
 case _CustomOverwriteDate() when $default != null:
 return $default(_that.proxies,_that.proxyGroups,_that.proxyProviders,_that.ruleTargets,_that.subRules);case _:
@@ -821,7 +821,7 @@ return $default(_that.proxies,_that.proxyGroups,_that.proxyProviders,_that.ruleT
 
 
 class _CustomOverwriteDate implements CustomOverwriteDate {
-  const _CustomOverwriteDate({final  List<Proxy> proxies = const [], final  List<ProxyGroup> proxyGroups = const [], final  List<String> proxyProviders = const [], final  List<String> ruleTargets = const [], final  List<String> subRules = const []}): _proxies = proxies,_proxyGroups = proxyGroups,_proxyProviders = proxyProviders,_ruleTargets = ruleTargets,_subRules = subRules;
+  const _CustomOverwriteDate({final  List<Proxy> proxies = const [], final  List<ProxyGroup> proxyGroups = const [], final  Set<String> proxyProviders = const {}, final  Set<String> ruleTargets = const {}, final  Set<String> subRules = const {}}): _proxies = proxies,_proxyGroups = proxyGroups,_proxyProviders = proxyProviders,_ruleTargets = ruleTargets,_subRules = subRules;
   
 
  final  List<Proxy> _proxies;
@@ -838,25 +838,25 @@ class _CustomOverwriteDate implements CustomOverwriteDate {
   return EqualUnmodifiableListView(_proxyGroups);
 }
 
- final  List<String> _proxyProviders;
-@override@JsonKey() List<String> get proxyProviders {
-  if (_proxyProviders is EqualUnmodifiableListView) return _proxyProviders;
+ final  Set<String> _proxyProviders;
+@override@JsonKey() Set<String> get proxyProviders {
+  if (_proxyProviders is EqualUnmodifiableSetView) return _proxyProviders;
   // ignore: implicit_dynamic_type
-  return EqualUnmodifiableListView(_proxyProviders);
+  return EqualUnmodifiableSetView(_proxyProviders);
 }
 
- final  List<String> _ruleTargets;
-@override@JsonKey() List<String> get ruleTargets {
-  if (_ruleTargets is EqualUnmodifiableListView) return _ruleTargets;
+ final  Set<String> _ruleTargets;
+@override@JsonKey() Set<String> get ruleTargets {
+  if (_ruleTargets is EqualUnmodifiableSetView) return _ruleTargets;
   // ignore: implicit_dynamic_type
-  return EqualUnmodifiableListView(_ruleTargets);
+  return EqualUnmodifiableSetView(_ruleTargets);
 }
 
- final  List<String> _subRules;
-@override@JsonKey() List<String> get subRules {
-  if (_subRules is EqualUnmodifiableListView) return _subRules;
+ final  Set<String> _subRules;
+@override@JsonKey() Set<String> get subRules {
+  if (_subRules is EqualUnmodifiableSetView) return _subRules;
   // ignore: implicit_dynamic_type
-  return EqualUnmodifiableListView(_subRules);
+  return EqualUnmodifiableSetView(_subRules);
 }
 
 
@@ -890,7 +890,7 @@ abstract mixin class _$CustomOverwriteDateCopyWith<$Res> implements $CustomOverw
   factory _$CustomOverwriteDateCopyWith(_CustomOverwriteDate value, $Res Function(_CustomOverwriteDate) _then) = __$CustomOverwriteDateCopyWithImpl;
 @override @useResult
 $Res call({
- List<Proxy> proxies, List<ProxyGroup> proxyGroups, List<String> proxyProviders, List<String> ruleTargets, List<String> subRules
+ List<Proxy> proxies, List<ProxyGroup> proxyGroups, Set<String> proxyProviders, Set<String> ruleTargets, Set<String> subRules
 });
 
 
@@ -912,9 +912,9 @@ class __$CustomOverwriteDateCopyWithImpl<$Res>
 proxies: null == proxies ? _self._proxies : proxies // ignore: cast_nullable_to_non_nullable
 as List<Proxy>,proxyGroups: null == proxyGroups ? _self._proxyGroups : proxyGroups // ignore: cast_nullable_to_non_nullable
 as List<ProxyGroup>,proxyProviders: null == proxyProviders ? _self._proxyProviders : proxyProviders // ignore: cast_nullable_to_non_nullable
-as List<String>,ruleTargets: null == ruleTargets ? _self._ruleTargets : ruleTargets // ignore: cast_nullable_to_non_nullable
-as List<String>,subRules: null == subRules ? _self._subRules : subRules // ignore: cast_nullable_to_non_nullable
-as List<String>,
+as Set<String>,ruleTargets: null == ruleTargets ? _self._ruleTargets : ruleTargets // ignore: cast_nullable_to_non_nullable
+as Set<String>,subRules: null == subRules ? _self._subRules : subRules // ignore: cast_nullable_to_non_nullable
+as Set<String>,
   ));
 }
 

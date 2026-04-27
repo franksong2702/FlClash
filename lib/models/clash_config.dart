@@ -146,9 +146,9 @@ abstract class CustomOverwriteDate with _$CustomOverwriteDate {
   const factory CustomOverwriteDate({
     @Default([]) List<Proxy> proxies,
     @Default([]) List<ProxyGroup> proxyGroups,
-    @Default([]) List<String> proxyProviders,
-    @Default([]) List<String> ruleTargets,
-    @Default([]) List<String> subRules,
+    @Default({}) Set<String> proxyProviders,
+    @Default({}) Set<String> ruleTargets,
+    @Default({}) Set<String> subRules,
   }) = _CustomOverwriteDate;
 }
 

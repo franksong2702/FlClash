@@ -698,8 +698,8 @@ CustomOverwriteDate customOverwriteDate(Ref ref, int profileId) {
     }),
   );
   final proxies = vm3.a;
-  final subRules = vm3.b;
-  final proxyProviders = vm3.c;
+  final subRules = vm3.b.toSet();
+  final proxyProviders = vm3.c.toSet();
   final proxyGroups =
       ref
           .watch(
@@ -709,11 +709,11 @@ CustomOverwriteDate customOverwriteDate(Ref ref, int profileId) {
           )
           .a ??
       [];
-  final ruleTargets = [
+  final ruleTargets = {
     ...RuleTarget.baseTargets,
     ...proxies.map((item) => item.name),
     ...proxyGroups.map((item) => item.name),
-  ];
+  };
   return CustomOverwriteDate(
     proxyProviders: proxyProviders,
     proxies: proxies,

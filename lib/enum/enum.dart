@@ -458,8 +458,8 @@ enum RuleTarget {
   DIRECT,
   REJECT;
 
-  static List<String> get baseTargets =>
-      RuleTarget.values.map((item) => item.name).toList();
+  static Set<String> get baseTargets =>
+      RuleTarget.values.map((item) => item.name).toSet();
 
   // static bool isBaseRuleTarget(String? target) {
   //   return RuleTarget.values.indexWhere(
