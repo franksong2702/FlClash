@@ -519,10 +519,8 @@ class _AddOrEditRuleViewState extends ConsumerState<_AddOrEditRuleView> {
   Widget _buildTargetItem(int profileId, String? target) {
     return Consumer(
       builder: (_, ref, _) {
-        final invalid = ref.watch(
-          customOverwriteDateProvider(
-            profileId,
-          ).select((state) => !state.ruleTargets.contains(target)),
+        final invalid = !ref.watch(
+          customOverwriteTargetIsValidProvider(profileId, target),
         );
         final foregroundColor = invalid
             ? context.colorScheme.error
@@ -841,7 +839,7 @@ class _RuleTargetSelectedView extends ConsumerWidget {
               padding: EdgeInsets.symmetric(horizontal: 16),
               sliver: SliverToBoxAdapter(
                 child: InfoHeader(
-                  info: Info(label: appLocalizations.proxyGroup),
+                  info: Info(label: appLocalizations.ruleTarget),
                 ),
               ),
             ),

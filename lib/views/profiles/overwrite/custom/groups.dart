@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:dynamic_color/dynamic_color.dart';
 import 'package:fl_clash/common/common.dart';
 import 'package:fl_clash/enum/enum.dart';
 import 'package:fl_clash/models/models.dart' hide FileInfo;
@@ -14,6 +15,7 @@ import 'package:smooth_sheets/smooth_sheets.dart';
 
 import 'icon.dart';
 import 'proxies.dart';
+import 'widgets.dart';
 
 class CustomProxyGroupsView extends ConsumerStatefulWidget {
   final int profileId;
@@ -65,50 +67,6 @@ class _CustomProxyGroupsViewState extends ConsumerState<CustomProxyGroupsView> {
     );
   }
 
-  Widget _buildItem({
-    required ProxyGroup proxyGroup,
-    required int index,
-    required int total,
-    required VoidCallback onPressed,
-  }) {
-    final position = ItemPosition.get(index, total);
-    return ItemPositionProvider(
-      key: ValueKey(proxyGroup.name),
-      position: position,
-      child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 16),
-        child: DecorationListItem(
-          onPressed: onPressed,
-          contentPadding: EdgeInsets.only(left: 16, right: 0),
-          minVerticalPadding: 8,
-          leading: SizedBox.square(
-            dimension: 32,
-            child: IconTheme.merge(
-              data: IconThemeData(size: 32),
-              child: CommonTargetIcon(src: proxyGroup.icon ?? ''),
-            ),
-          ),
-          title: TooltipText(
-            text: Text(
-              proxyGroup.name,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-            ),
-          ),
-          subtitle: Text(proxyGroup.type.name),
-          trailing: ReorderableDelayedDragStartListener(
-            index: index,
-            child: Container(
-              color: Colors.transparent,
-              padding: EdgeInsets.all(16),
-              child: Icon(Icons.drag_handle),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
   void _handleAdd() {
     showSheet(
       context: context,
@@ -142,11 +100,13 @@ class _CustomProxyGroupsViewState extends ConsumerState<CustomProxyGroupsView> {
 
   @override
   Widget build(BuildContext context) {
-    final proxyGroups = ref.watch(
-      customOverwriteDateProvider(
-        widget.profileId,
-      ).select((state) => VM(state.proxyGroups)),
-    ).a;
+    final proxyGroups = ref
+        .watch(
+          customOverwriteDateProvider(
+            widget.profileId,
+          ).select((state) => VM(state.proxyGroups)),
+        )
+        .a;
     return CommonScaffold(
       title: appLocalizations.proxyGroup,
       actions: [
@@ -170,7 +130,9 @@ class _CustomProxyGroupsViewState extends ConsumerState<CustomProxyGroupsView> {
                 ).copyWith(bottom: 24),
                 itemBuilder: (context, index) {
                   final proxyGroup = proxyGroups[index];
-                  return _buildItem(
+                  return _ProxyGroupItem(
+                    key: ValueKey(proxyGroup.id),
+                    profileId: widget.profileId,
                     proxyGroup: proxyGroup,
                     total: proxyGroups.length,
                     index: index,
@@ -182,7 +144,9 @@ class _CustomProxyGroupsViewState extends ConsumerState<CustomProxyGroupsView> {
                 proxyDecorator: (child, index, animation) {
                   final proxyGroup = proxyGroups[index];
                   return commonProxyDecorator(
-                    _buildItem(
+                    _ProxyGroupItem(
+                      key: ValueKey(proxyGroup.id),
+                      profileId: widget.profileId,
                       proxyGroup: proxyGroup,
                       total: proxyGroups.length,
                       index: index,
@@ -204,6 +168,77 @@ class _CustomProxyGroupsViewState extends ConsumerState<CustomProxyGroupsView> {
                 },
               ),
             ),
+    );
+  }
+}
+
+class _ProxyGroupItem extends ConsumerWidget {
+  final int profileId;
+  final ProxyGroup proxyGroup;
+  final int index;
+  final int total;
+  final VoidCallback onPressed;
+
+  const _ProxyGroupItem({
+    super.key,
+    required this.profileId,
+    required this.proxyGroup,
+    required this.index,
+    required this.total,
+    required this.onPressed,
+  });
+
+  @override
+  Widget build(BuildContext context, ref) {
+    final isValid = ref.watch(
+      customOverwriteGroupIsValidProvider(profileId, proxyGroup),
+    );
+    final position = ItemPosition.get(index, total);
+    return ItemPositionProvider(
+      position: position,
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 16),
+        child: Consumer(
+          builder: (_, ref, _) {
+            return DecorationListItem(
+              invalid: !isValid,
+              onPressed: onPressed,
+              contentPadding: EdgeInsets.only(left: 16, right: 0),
+              minVerticalPadding: 8,
+              leading: SizedBox.square(
+                dimension: 32,
+                child: IconTheme.merge(
+                  data: IconThemeData(size: 32),
+                  child: CommonTargetIcon(src: proxyGroup.icon ?? ''),
+                ),
+              ),
+              title: TooltipText(
+                text: Text(
+                  proxyGroup.name,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+              subtitle: Text(proxyGroup.type.name),
+              trailing: Row(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  if (!isValid) InfoMessageButton(message: '检测到当前策略组异常'),
+                  ReorderableDelayedDragStartListener(
+                    index: index,
+                    child: Container(
+                      padding: EdgeInsets.all(12),
+                      color: Colors.transparent,
+                      child: Icon(Icons.drag_handle),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
+        ),
+      ),
     );
   }
 }
@@ -403,8 +438,10 @@ class _EditProxyGroupViewState extends ConsumerState<_EditProxyGroupView> {
     required Widget title,
     Widget? trailing,
     final VoidCallback? onPressed,
+    bool invalid = false,
   }) {
     return DecorationListItem(
+      invalid: invalid,
       onPressed: onPressed,
       title: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -415,7 +452,7 @@ class _EditProxyGroupViewState extends ConsumerState<_EditProxyGroupView> {
             Flexible(
               child: IconTheme(
                 data: IconThemeData(
-                  size: 16,
+                  size: 16.ap,
                   color: context.colorScheme.onSurface.opacity60,
                 ),
                 child: Container(
@@ -443,39 +480,30 @@ class _EditProxyGroupViewState extends ConsumerState<_EditProxyGroupView> {
   }
 
   Widget _buildProvidersItem(bool includeAllProviders, List<String> use) {
-    return _buildItem(
-      title: Text(appLocalizations.selectProxyProviders),
-      trailing: Row(
-        mainAxisSize: MainAxisSize.min,
-        spacing: 2,
-        children: [
-          !includeAllProviders
-              ? Card(
-                  elevation: 0,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(14),
-                  ),
-                  child: Container(
-                    constraints: BoxConstraints(minWidth: 32),
-                    alignment: Alignment.center,
-                    height: globalState.measure.bodySmallHeight + 6,
-                    padding: EdgeInsets.symmetric(horizontal: 4, vertical: 3),
-                    child: Text(
-                      textAlign: TextAlign.center,
-                      '${use.length}',
-                      style: context.textTheme.bodySmall,
-                    ),
-                  ),
-                )
-              : Icon(
-                  Icons.check_circle_outline,
-                  size: 20,
-                  color: Colors.greenAccent.shade200,
-                ),
-          Icon(Icons.arrow_forward_ios),
-        ],
-      ),
-      onPressed: _handleToProvidersView,
+    final profileId = ProfileIdProvider.of(context)!.profileId;
+    return Consumer(
+      builder: (_, ref, _) {
+        final invalid = !ref.watch(
+          customOverwriteUseIsValidProvider(profileId, use),
+        );
+        return _buildItem(
+          invalid: invalid,
+          title: Text(appLocalizations.selectProxyProviders),
+          trailing: Row(
+            mainAxisSize: MainAxisSize.min,
+            spacing: 2,
+            children: [
+              invalid
+                  ? InfoMessageButton(message: '检测到选中的代理集存在异常')
+                  : (!includeAllProviders
+                        ? _NumberCard(number: use.length)
+                        : _CheckIcon()),
+              Icon(Icons.arrow_forward_ios),
+            ],
+          ),
+          onPressed: _handleToProvidersView,
+        );
+      },
     );
   }
 
@@ -620,39 +648,30 @@ class _EditProxyGroupViewState extends ConsumerState<_EditProxyGroupView> {
   }
 
   Widget _buildProxiesItem(bool includeAllProxies, List<String> proxies) {
-    return _buildItem(
-      title: Text(appLocalizations.selectProxies),
-      trailing: Row(
-        mainAxisSize: MainAxisSize.min,
-        spacing: 2,
-        children: [
-          !includeAllProxies
-              ? Card(
-                  elevation: 0,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(14),
-                  ),
-                  child: Container(
-                    constraints: BoxConstraints(minWidth: 32),
-                    alignment: Alignment.center,
-                    height: globalState.measure.bodySmallHeight + 6,
-                    padding: EdgeInsets.symmetric(horizontal: 4, vertical: 3),
-                    child: Text(
-                      textAlign: TextAlign.center,
-                      '${proxies.length}',
-                      style: context.textTheme.bodySmall,
-                    ),
-                  ),
-                )
-              : Icon(
-                  Icons.check_circle_outline,
-                  size: 20,
-                  color: Colors.greenAccent.shade200,
-                ),
-          Icon(Icons.arrow_forward_ios),
-        ],
-      ),
-      onPressed: _handleToProxiesView,
+    final profileId = ProfileIdProvider.of(context)!.profileId;
+    return Consumer(
+      builder: (_, ref, _) {
+        final invalid = !ref.watch(
+          customOverwriteProxiesIsValidProvider(profileId, proxies),
+        );
+        return _buildItem(
+          invalid: invalid,
+          title: Text(appLocalizations.selectProxies),
+          trailing: Row(
+            spacing: 2,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              invalid
+                  ? InfoMessageButton(message: '检测到选中的代理存在异常')
+                  : (!includeAllProxies
+                        ? _NumberCard(number: proxies.length)
+                        : _CheckIcon()),
+              Icon(Icons.arrow_forward_ios),
+            ],
+          ),
+          onPressed: _handleToProxiesView,
+        );
+      },
     );
   }
 
@@ -863,6 +882,47 @@ class _EditProxyGroupViewState extends ConsumerState<_EditProxyGroupView> {
       title: proxyGroup.id == -1
           ? appLocalizations.addProxyGroup
           : appLocalizations.editProxyGroup,
+    );
+  }
+}
+
+class _CheckIcon extends StatelessWidget {
+  const _CheckIcon();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.all(6),
+      child: Icon(
+        Icons.check_circle_outline,
+        size: 20.ap,
+        color: Colors.greenAccent.harmonizeWith(context.colorScheme.primary),
+      ),
+    );
+  }
+}
+
+class _NumberCard extends StatelessWidget {
+  final int number;
+
+  const _NumberCard({required this.number});
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      elevation: 0,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+      child: Container(
+        constraints: BoxConstraints(minWidth: 32),
+        alignment: Alignment.center,
+        height: globalState.measure.bodySmallHeight + 6,
+        padding: EdgeInsets.symmetric(horizontal: 4, vertical: 3),
+        child: Text(
+          textAlign: TextAlign.center,
+          '$number',
+          style: context.textTheme.bodySmall,
+        ),
+      ),
     );
   }
 }

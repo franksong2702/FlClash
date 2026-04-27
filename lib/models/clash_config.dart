@@ -3,7 +3,6 @@ import 'package:fl_clash/enum/enum.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'generated/clash_config.freezed.dart';
-
 part 'generated/clash_config.g.dart';
 
 const defaultClashConfig = PatchClashConfig();
@@ -147,6 +146,7 @@ abstract class CustomOverwriteDate with _$CustomOverwriteDate {
   const factory CustomOverwriteDate({
     @Default([]) List<Proxy> proxies,
     @Default([]) List<ProxyGroup> proxyGroups,
+    @Default([]) List<String> proxyProviders,
     @Default([]) List<String> ruleTargets,
     @Default([]) List<String> subRules,
   }) = _CustomOverwriteDate;

@@ -9,6 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:smooth_sheets/smooth_sheets.dart';
 
+import 'widgets.dart';
+
 class EditProxiesView extends ConsumerStatefulWidget {
   const EditProxiesView({super.key});
 
@@ -77,34 +79,54 @@ class _EditProxiesViewState extends ConsumerState<EditProxiesView>
         padding: EdgeInsets.symmetric(horizontal: 16),
         child: ItemPositionProvider(
           position: position,
-          child: DecorationListItem(
-            minVerticalPadding: 8,
-            title: TooltipText(
-              text: Text(
-                proxyName,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-              ),
-            ),
-            subtitle: Text(proxyType ?? proxyName.toLowerCase()),
-            contentPadding: EdgeInsets.only(left: 16, right: 0),
-            leading: CommonMinIconButtonTheme(
-              child: IconButton.filledTonal(
-                onPressed: () {
-                  _handleRemove(proxyName);
-                },
-                icon: Icon(Icons.remove, size: 18),
-                padding: EdgeInsets.zero,
-              ),
-            ),
-            trailing: ReorderableDelayedDragStartListener(
-              index: index,
-              child: Container(
-                color: Colors.transparent,
-                padding: EdgeInsets.all(16),
-                child: Icon(Icons.drag_handle),
-              ),
-            ),
+          child: Consumer(
+            builder: (_, ref, _) {
+              final profileId = ProfileIdProvider.of(context)!.profileId;
+              final isValid = ref.watch(
+                customOverwriteTargetIsValidProvider(profileId, proxyName),
+              );
+              return DecorationListItem(
+                invalid: !isValid,
+                minVerticalPadding: 8,
+                title: TooltipText(
+                  text: Text(
+                    proxyName,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+                subtitle: proxyType != null
+                    ? Text(proxyType)
+                    : (RuleTarget.baseTargets.contains(proxyName)
+                          ? Text(proxyName.toLowerCase())
+                          : null),
+                contentPadding: EdgeInsets.only(left: 16, right: 0),
+                leading: CommonMinIconButtonTheme(
+                  child: IconButton.filledTonal(
+                    onPressed: () {
+                      _handleRemove(proxyName);
+                    },
+                    icon: Icon(Icons.remove, size: 18),
+                    padding: EdgeInsets.zero,
+                  ),
+                ),
+                trailing: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    if (!isValid)
+                      InfoMessageButton(message: '$proxyName 是一个无效的代理'),
+                    ReorderableDelayedDragStartListener(
+                      index: index,
+                      child: Container(
+                        color: Colors.transparent,
+                        padding: EdgeInsets.all(12),
+                        child: Icon(Icons.drag_handle),
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            },
           ),
         ),
       ),
@@ -306,6 +328,11 @@ class _AddProxiesViewState extends ConsumerState<_AddProxiesView>
         _handleRealAdd('proxies');
       }
     });
+    ref.listenManual(itemsProvider('${key}_targets'), (prev, next) {
+      if (!SetEquality().equals(prev, next)) {
+        _handleRealAdd('targets');
+      }
+    });
   }
 
   void _handleAdd(String name, String scene) {
@@ -379,11 +406,14 @@ class _AddProxiesViewState extends ConsumerState<_AddProxiesView>
     final profileId = ProfileIdProvider.of(context)!.profileId;
     final dismissGroups = ref.watch(itemsProvider('${key}_groups'));
     final dismissProxies = ref.watch(itemsProvider('${key}_proxies'));
-    final excludeProxyNames = ref.watch(
-      proxyGroupProvider.select((state) {
-        return VM([...?state.proxies, state.name]);
-      }),
-    ).a;
+    final dismissTargets = ref.watch(itemsProvider('${key}_targets'));
+    final excludeProxyNames = ref
+        .watch(
+          proxyGroupProvider.select((state) {
+            return VM([...?state.proxies, state.name]);
+          }),
+        )
+        .a;
     final vm2 = ref.watch(
       customOverwriteDateProvider(profileId).select((state) {
         return VM2(
@@ -398,6 +428,9 @@ class _AddProxiesViewState extends ConsumerState<_AddProxiesView>
     );
     final proxies = vm2.a;
     final proxyGroups = vm2.b;
+    final targets = RuleTarget.baseTargets
+        .where((item) => !excludeProxyNames.contains(item))
+        .toList();
     final groupNames = proxyGroups.map((item) => item.name).toList();
     final proxyNames = proxies.map((item) => item.name).toList();
     final height = ref.watch(
@@ -417,6 +450,36 @@ class _AddProxiesViewState extends ConsumerState<_AddProxiesView>
                   SliverToBoxAdapter(
                     child: SizedBox(height: context.sheetTopPadding),
                   ),
+                  if (targets.isNotEmpty) ...[
+                    SliverPadding(
+                      padding: EdgeInsets.symmetric(horizontal: 16),
+                      sliver: SliverToBoxAdapter(
+                        child: InfoHeader(
+                          info: Info(label: appLocalizations.basicStrategy),
+                        ),
+                      ),
+                    ),
+                    SliverList(
+                      delegate: SliverChildBuilderDelegate((_, index) {
+                        final target = targets[index];
+                        final position = ItemPosition.calculateVisualPosition(
+                          index,
+                          targets,
+                          dismissTargets,
+                        );
+                        return _buildItem(
+                          title: target,
+                          subtitle: target.toLowerCase(),
+                          position: position,
+                          dismiss: dismissTargets.contains(target),
+                          onAdd: () {
+                            _handleAdd(target, 'targets');
+                          },
+                        );
+                      }, childCount: targets.length),
+                    ),
+                    SliverToBoxAdapter(child: SizedBox(height: 8)),
+                  ],
                   if (proxyGroups.isNotEmpty) ...[
                     SliverPadding(
                       padding: EdgeInsets.symmetric(horizontal: 16),

@@ -454,7 +454,20 @@ enum OverwriteType {
   custom,
 }
 
-enum RuleTarget { DIRECT, REJECT }
+enum RuleTarget {
+  DIRECT,
+  REJECT;
+
+  static List<String> get baseTargets =>
+      RuleTarget.values.map((item) => item.name).toList();
+
+  // static bool isBaseRuleTarget(String? target) {
+  //   return RuleTarget.values.indexWhere(
+  //         (item) => item.name == target?.toUpperCase(),
+  //       ) !=
+  //       -1;
+  // }
+}
 
 enum RestoreStrategy { compatible, override }
 

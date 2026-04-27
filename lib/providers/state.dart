@@ -688,13 +688,18 @@ Future<ClashConfig> clashConfig(Ref ref, int profileId) async {
 
 @riverpod
 CustomOverwriteDate customOverwriteDate(Ref ref, int profileId) {
-  final vm2 = ref.watch(
+  final vm3 = ref.watch(
     clashConfigProvider(profileId).select((state) {
-      return VM2(state.value?.proxies ?? [], state.value?.subRules ?? []);
+      return VM3(
+        state.value?.proxies ?? [],
+        state.value?.subRules ?? [],
+        state.value?.proxyProviders ?? [],
+      );
     }),
   );
-  final proxies = vm2.a;
-  final subRules = vm2.b;
+  final proxies = vm3.a;
+  final subRules = vm3.b;
+  final proxyProviders = vm3.c;
   final proxyGroups =
       ref
           .watch(
@@ -705,15 +710,69 @@ CustomOverwriteDate customOverwriteDate(Ref ref, int profileId) {
           .a ??
       [];
   final ruleTargets = [
+    ...RuleTarget.baseTargets,
     ...proxies.map((item) => item.name),
     ...proxyGroups.map((item) => item.name),
   ];
   return CustomOverwriteDate(
+    proxyProviders: proxyProviders,
     proxies: proxies,
     proxyGroups: proxyGroups,
     ruleTargets: ruleTargets,
     subRules: subRules,
   );
+}
+
+@riverpod
+bool customOverwriteTargetIsValid(Ref ref, int profileId, String? target) {
+  final valid = ref.watch(
+    customOverwriteDateProvider(
+      profileId,
+    ).select((state) => state.ruleTargets.contains(target)),
+  );
+  return valid;
+}
+
+@riverpod
+bool customOverwriteUseIsValid(Ref ref, int profileId, List<String> use) {
+  final valid = ref.watch(
+    customOverwriteDateProvider(
+      profileId,
+    ).select((state) => state.ruleTargets.containsAll(use)),
+  );
+  return valid;
+}
+
+@riverpod
+bool customOverwriteProxiesIsValid(
+  Ref ref,
+  int profileId,
+  List<String> proxies,
+) {
+  final valid = ref.watch(
+    customOverwriteDateProvider(
+      profileId,
+    ).select((state) => state.ruleTargets.containsAll(proxies)),
+  );
+  return valid;
+}
+
+@riverpod
+bool customOverwriteGroupIsValid(
+  Ref ref,
+  int profileId,
+  ProxyGroup proxyGroup,
+) {
+  final proxies = proxyGroup.proxies ?? [];
+  final use = proxyGroup.use ?? [];
+  final valid = ref.watch(
+    customOverwriteDateProvider(profileId).select(
+      (state) =>
+          state.ruleTargets.containsAll(proxies) &&
+          state.proxyProviders.containsAll(use),
+    ),
+  );
+  return valid;
 }
 
 @riverpod

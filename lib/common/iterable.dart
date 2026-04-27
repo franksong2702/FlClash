@@ -11,6 +11,8 @@ extension IterableExt<E> on Iterable<E> {
     }
   }
 
+  bool containsAll(List<E> other) => other.every(contains);
+
   Iterable<List<E>> chunks(int size) sync* {
     if (length == 0) return;
     var iterator = this.iterator;
