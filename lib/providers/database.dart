@@ -375,6 +375,10 @@ class ProxyGroups extends _$ProxyGroups with AsyncNotifierMixin {
         );
       }
     }
+    final icon = proxyGroup.icon?.value;
+    if (icon != null) {
+      database.iconRecordsDao.put(icon);
+    }
     withRollback(value, () {
       final newList = [...value];
       if (index != -1) {

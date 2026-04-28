@@ -183,9 +183,6 @@ class _IconEditViewState extends ConsumerState<IconEditView>
       backAction: () {
         Navigator.of(context).pop(_srcController.text);
       },
-      // actions: [IconButtonData(icon: Icons.check, onPressed: (){
-      //   Navigator.of(context).pop(_srcController.text);
-      // })],
       title: appLocalizations.icon,
       body: SizedBox(
         height: height,
