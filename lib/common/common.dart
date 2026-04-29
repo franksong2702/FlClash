@@ -34,6 +34,7 @@ export 'print.dart';
 export 'protocol.dart';
 export 'proxy.dart';
 export 'render.dart';
+export 'remote_input_server.dart';
 export 'request.dart';
 export 'scroll.dart';
 export 'snowflake.dart';

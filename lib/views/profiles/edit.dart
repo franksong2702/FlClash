@@ -237,6 +237,10 @@ class _EditProfileViewState extends State<EditProfileView> {
             decoration: InputDecoration(
               border: const OutlineInputBorder(),
               labelText: appLocalizations.url,
+              suffixIcon: RemoteInputSuffixButton(
+                controller: _urlController,
+                title: appLocalizations.importFromURL,
+              ),
             ),
             validator: (String? value) {
               if (value == null || value.isEmpty) {
