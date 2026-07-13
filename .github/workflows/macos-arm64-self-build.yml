@@ -1,0 +1,67 @@
+name: macOS ARM64 Self Build
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: macos-latest
+    timeout-minutes: 60
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.26.4'
+          cache-dependency-path: core/go.sum
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          flutter-version: '3.44.4'
+          cache: true
+
+      - name: Resolve Flutter dependencies
+        run: flutter pub get
+
+      - name: Build macOS package from source
+        run: dart setup.dart macos --env stable -v
+
+      - name: Prepare locally trusted app archive
+        shell: bash
+        run: |
+          set -euo pipefail
+          app_path="$(find build -type d -name 'FlClash.app' -print -quit)"
+          test -n "$app_path"
+
+          xattr -cr "$app_path"
+          codesign --force --deep --sign - "$app_path"
+          codesign --verify --deep --strict --verbose=2 "$app_path"
+
+          mkdir -p artifact
+          ditto "$app_path" artifact/FlClash.app
+          ditto -c -k --keepParent artifact/FlClash.app \
+            artifact/FlClash-macos-arm64-self-built.zip
+          shasum -a 256 artifact/FlClash-macos-arm64-self-built.zip \
+            > artifact/SHA256SUMS
+          git rev-parse HEAD > artifact/SOURCE_COMMIT
+
+      - name: Upload self-built app
+        uses: actions/upload-artifact@v4
+        with:
+          name: FlClash-macos-arm64-self-built
+          path: |
+            artifact/FlClash-macos-arm64-self-built.zip
+            artifact/SHA256SUMS
+            artifact/SOURCE_COMMIT
+          if-no-files-found: error
+          retention-days: 7
